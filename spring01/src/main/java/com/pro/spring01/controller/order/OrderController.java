@@ -70,14 +70,12 @@ public class OrderController {
 				cartid = Integer.parseInt(i);
 				cartDto.setCartid(cartid);
 				orderDetailService.insertDetail(userid,orderid,cartid);
+			}
+
+			for (String i : chArr){
 				cartid = Integer.parseInt(i);
 				cartService.delete(cartid);
 			}
-
-//			for (String i : chArr){
-//				cartid = Integer.parseInt(i);
-//				cartService.delete(cartid);
-//			}
 		
 		}
 		return "redirect:/cart/list.do";
