@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+	<insert id="insert">
+		insert into cart (cartid, userid, productid, amount)
+		values(seq_cart.nextval, #{userid}, #{productid}, #{amount})
+	</insert>
+	
+	<select id="list" resultType="com.pro.spring01.model.cart.dto.CartDTO">
+		SELECT cartid, p.productid, c.userid, name, productname, amount, p.pictureurl,
+		price, (price*amount) money from member m, product p, cart c 
+		WHERE m.userid = c.userid and p.productid = c.productid and c.userid = #{userid}
+		order by cartid
+	</select>
+	
+	<select id="sumMoney" resultType="int">
+		select nvl(sum(price*amount),0) from cart c, product p
+		where c.productid = p.productid and userid = #{userid}
+	</select>
+	
+	<delete id="delete">
+		delete from cart where cartid = #{cartid}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from cart where userid = #{userid}
+	</delete>
+	
+	<update id="update">
+		update cart set amount=#{amount}
+		where cartid = #{cartid}
+	</update>
+	
+	<select id ="money" resultType ="com.pro.spring01.model.cart.dto.CartDTO">
+        select productname, sum(price * amount) money 
+        from cart c, product p
+        where c.productid=p.productid
+        group by productname
+        order by productname
+    </select>
+        
+        <!-- 상품테이블과 장바구니 테이블로부터 상품의 이름과 전체 금액을 검색 -->
+        <!-- 조건 : 장바구니 테이블의 상품 id와 상품 테이블의 상품 id가 같은 것만 (즉, 내가 장바구니에 담은 상품의 id만) -->
+        <!-- 그리고 검색한 것들을 product_name란 속성을 만들어서 내림차순으로 정렬시킴 -->
+ 
+	
+</mapper>

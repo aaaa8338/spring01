@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+
+	<insert id="insert">
+	 insert into ordered(orderid, userid, name, zipcode, address1, address2, tel, totalprice)
+	     values(#{orderid}, #{userid}, #{name}, #{zipcode}, #{address1}, #{address2}, #{tel}, #{totalprice})
+	</insert>
+	
+	<insert id="inserted">
+	 insert into ordered(orderid, userid, name, zipcode, address1, address2, tel, totalprice)
+	     values(#{orderid}, #{userid}, #{name}, #{zipcode}, #{address1}, #{address2}, #{tel}, #{totalprice})
+	</insert>
+   	
+   	<select id="list" resultType="com.pro.spring01.model.order.dto.OrderDTO">
+		select * from ordered where userid = #{userid} order by orderid
+   	</select>
+  	
+  	<select id="detailList" resultType="com.pro.spring01.model.order.dto.OrderDTO">
+         select o.orderid, o.userid, o.name, o.zipcode, o.address1, o.address2, o.tel, o.totalprice, d.amount, o.orderdate,
+         d.orderdetailid, p.pictureurl, p.productname, p.price from ordered o, orderdetail d, product p
+         where d.userid = #{userid} and o.orderid = #{orderid} and o.orderid = d.orderid and p.productid= d.productid 
+  	</select>
+  	
+  	<select id="adminList" resultType="com.pro.spring01.model.order.dto.OrderDTO">
+		select * from ordered order by userid
+   	</select>
+</mapper>

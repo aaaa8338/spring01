@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+	<select id="detail" resultType="com.pro.spring01.model.product.dto.ProductDTO">
+		select * from product where productid = #{productid}
+	</select>
+	
+	<select id="allList" resultType="com.pro.spring01.model.product.dto.ProductDTO">
+		<include refid="paging_header" />
+		select * from product
+		<include refid="search" />
+		order by productid 
+		<include refid="paging_footer" />
+	</select>
+	
+	<select id="countProduct" resultType="int">
+        select count(*) from product   
+        <include refid="search" />
+    </select>
+    
+    <select id="countProduct1" resultType="int">
+        select count(*) from product   
+        <include refid="search" />
+        and kind = #{kind}
+    </select>
+    
+    <sql id="paging_header">
+		select *
+		from (
+		select rownum as rn, A.*
+		from (
+	</sql>
+
+	<sql id="paging_footer">
+		) A
+		) where rn between #{start} and #{end}
+	</sql>
+
+	<sql id="search">
+        <choose>
+            <when test="search_option == 'all' ">
+      			where (productname like '%'||#{keyword}||'%'
+      			or description like '%' || #{keyword}||'%')        
+            </when>
+            <otherwise>
+                where ${search_option} like '%'||#{keyword}||'%'  
+            </otherwise>
+        </choose>
+    </sql>
+    
+    <select id="kindList" resultType="com.pro.spring01.model.product.dto.ProductDTO">
+		<include refid="paging_header" />
+		select * from product 
+		<include refid="search" />
+		and kind = #{kind} 
+		order by productid 
+		<include refid="paging_footer" />
+	</select>
+    
+    
+	<insert id="insert">
+		insert into product values(seq_product.nextval, #{productname}, #{price}, #{kind},
+		#{description}, #{pictureurl})
+	</insert>
+	
+	<update id="update">
+		update product set productname = #{productname}, price = #{price}, kind= #{kind},
+		description = #{description}, pictureurl = #{pictureurl}
+		where productid = #{productid}
+	</update>
+	
+	<delete id="delete">
+		delete from product where productid = #{productid} 
+	</delete>
+	
+	<select id="fileInfo" resultType="String">
+		select pictureurl from product where productid = #{productid} 
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from product where productname = #{productname} 
+	</select>
+	
+</mapper>
