@@ -27,7 +27,7 @@ public class ImageUploadController {
  
     // 이미지를 저장하고, 불러오고, 업로드하기위해 매개변수를 선언
     public void imageUpload(HttpServletRequest request, HttpServletResponse response, @RequestParam MultipartFile upload)
-    //MultipartFile 타입은 ckedit에서 upload란 이름으로 저장하게 된다
+    //MultipartFile 타입은 ckedit 에서 upload란 이름으로 저장하게 된다
             throws Exception {
  
         // 한글깨짐을 방지하기위해 문자셋 설정
