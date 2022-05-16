@@ -110,7 +110,7 @@ public class CartController {
 				dto.setUserid(userid);
 				dto.setCartid(cartid[i]);
 				dto.setAmount(amount[i]);
-				cartService.update(dto);
+				cartService.update(dto); 
 			}
 		}
 		return "redirect:/cart/list.do";
