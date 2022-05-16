@@ -96,7 +96,7 @@ public class MemberController {
 		if (errors.hasErrors()) return "member/write";
 			
 
-//		if(result == 1) { //중복된 아이디가 있을경우 
+//		if (result == 1) { // 중복된 아이디가 있을경우 
 //			// 아이디 비밀번호 초기화
 //			dto.setUserid("");
 //			dto.setUserpwd("");
