@@ -73,7 +73,7 @@ public class CartController {
 				cartid = Integer.parseInt(i);
 				dto.setCartid(cartid);
 				cartService.delete(cartid);
-			} 
+			}
 			
 			result = 1;
 		}
@@ -110,7 +110,6 @@ public class CartController {
 				dto.setUserid(userid);
 				dto.setCartid(cartid[i]);
 				dto.setAmount(amount[i]);
-				
 				cartService.update(dto);
 			}
 		}
