@@ -33,7 +33,7 @@ public class BoardController {
 	    //defaultValue를 설정하지 않으면 null point 에러가 발생할수 있기 때문에 기본값을 설정해주어야 한다.
 	                        throws Exception{
 	        //레코드 갯수 계산
-		   	int count = boardService.countArticle(search_option, keyword); //검색옵션과 키워드를 고려
+		   	int count = boardService.countArticle(search_option, keyword); // 검색옵션과 키워드를 고려
 	        
 	        //페이지 관련 설정, 시작번호와 끝번호를 구해서 각각 변수에 저장함
 	        PagerDTO pager=new PagerDTO(count, curPage); //레코드 번호와 원하는 페이지의 번호를 주게 되면 
