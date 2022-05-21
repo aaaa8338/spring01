@@ -30,7 +30,13 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("end", end);
 		return sqlSession.selectList("member.list",map);
 	}
-
+	
+	/**
+	 * 회원을 등록한다
+	 * @param dto - 등록할 정보가 담긴 MemberDto
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
 	@Override
 	public void insert(MemberDTO dto) {
 		sqlSession.insert("member.insert",dto);

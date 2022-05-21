@@ -7,7 +7,21 @@ import javax.servlet.http.HttpSession;
 import com.pro.spring01.model.member.dto.MemberDTO;
 
 public interface MemberService {
+	
+	/**
+	 * 회원을 조회한다
+	 * @param  search_option, keyword, start, end
+	 * @return 조회 결과
+	 * @exception Exception
+	*/
 	public List<MemberDTO> list(String search_option, String keyword, int start, int end)throws Exception;
+	
+	/**
+	 * 회원을 등록한다
+	 * @param dto - 등록할 정보가 담긴 MemberDto
+	 * @return 등록 결과
+	 * @exception Exception
+	*/
 	public void insert(MemberDTO dto);
 	public MemberDTO detail(String userid);
 	public void delete(String userid);
