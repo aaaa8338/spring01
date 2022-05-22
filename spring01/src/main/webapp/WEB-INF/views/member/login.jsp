@@ -13,12 +13,13 @@
 
 <script type="text/javascript">
 	function loginCheck() {
-		if(document.form1.userid.value==""){
+		if (document.form1.userid.value.trim() == "") {
 			alert('아이디를 입력하세요');
 			form1.userid.focus();
 			return;
 		}
-		if(document.form1.userpwd.value==""){
+		
+		if (document.form1.userpwd.value.trim() == ""){
 			alert('비밀번호를 입력하세요');
 			form1.userpwd.focus();
 			return;

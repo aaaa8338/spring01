@@ -10,7 +10,10 @@ public interface MemberService {
 	
 	/**
 	 * 회원을 조회한다
-	 * @param  search_option, keyword, start, end
+	 * @param search_option - 검색옵션
+	 * @param keyword - 키워드
+	 * @param start - 시작 페이지 
+	 * @param end - 마지막 페이지
 	 * @return 조회 결과
 	 * @exception Exception
 	*/

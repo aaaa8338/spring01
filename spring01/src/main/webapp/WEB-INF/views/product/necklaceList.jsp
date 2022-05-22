@@ -11,11 +11,11 @@
 <script>
 	$(document).ready(function () {
 		$(".pad").hover(function() {
-				$(this).addClass("sha", 10);
-			}, function() {
-				$(this).removeClass("sha", 100);
-			});
+			$(this).addClass("sha", 10);
+		}, function() {
+			$(this).removeClass("sha", 100);
 		});
+	});
 	
 	function list(page){ //현재 페이지의 조건을 넘겨준다. +뒤에있는 것들은 검색 
 	    location.href="${path}/product/necklaceList.do?kind=목걸이"+"&curPage="+page+"&search_option=${map.search_option}"+"&keyword=${map.keyword}";
@@ -38,13 +38,14 @@
 	<c:when test="${sessionScope.power == '0'}">
 		<%@ include file ="../include/adminmenu.jsp" %>
 	</c:when>
+	
 	<c:otherwise>
 		<%@ include file ="../include/menu.jsp" %>
 	</c:otherwise>
 </c:choose>
 <div class="had">
-<h1>necklace</h1>
-<span>${map.count}개의 상품이 있습니다.</span>
+	<h1>necklace</h1>
+	<span>${map.count}개의 상품이 있습니다.</span>
 </div>
 <!-- <input type="button" value="상품등록" onclick="product_write()"> -->
 
@@ -66,9 +67,9 @@
 				<a href="${path}/product/detail.do?productid=${row.productid}&curPage=${map.pager.curPage}&search_option=${map.search_option} 
 				&keyword=${map.keyword}"><img class="pic" src="${path}/images/${row.pictureurl}"></a>
 				<p>
-				<a class="dd" style="font-size: 20px; margin-left: 3%;" 
-				href="${path}/product/detail.do?productid=${row.productid}&curPage=${map.pager.curPage}&search_option=${map.search_option} 
-				&keyword=${map.keyword}">${row.productname}</a>
+					<a class="dd" style="font-size: 20px; margin-left: 3%;" 
+					href="${path}/product/detail.do?productid=${row.productid}&curPage=${map.pager.curPage}&search_option=${map.search_option} 
+					&keyword=${map.keyword}">${row.productname}</a>
 				<p>
 				<p id="detail1" style="font-size: 20px; margin-top: 2%; margin-left: 3%;"><fmt:formatNumber value="${row.price}" pattern="#,###"/>
 					<c:if test="${sessionScope.userid == 'admin' }">
@@ -80,65 +81,61 @@
 	</div>
 	
 	<div class="container">
-	<div class="row" style="text-align: center;">
-		<div class="col">
-			<ul class="pagination">
-			  <li>
-			   <c:if test="${map.pager.curBlock >= 1}">
-			    		<a aria-label="Previous" href="javascript:list('${map.pager.prevPage}')">
-			    		<span aria-hidden="true">&laquo;</span>
-			    		</a>
-			   </c:if> 
-			  </li>
-			  <li>
-			   <c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
-			      	<c:choose>
-			              <c:when test="${num == map.pager.curPage}">  
-			                  <span style="color:orange;">${num}</span>&nbsp;
-			              </c:when>
-			              <c:otherwise>
-			                  <a href="javascript:list('${num}')">${num}</a>&nbsp;
-			              </c:otherwise>
-			          </c:choose>
-			     </c:forEach>
-			  </li>
-			  <li>
-			  	<c:if test="${map.pager.curBlock >= map.pager.totBlock}">
-				<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" >
-				<span aria-hidden="true">&raquo;</span>
-				</a>
-			  	</c:if>
-			  </li>
-			</ul>
+		<div class="row" style="text-align: center;">
+			<div class="col">
+				<ul class="pagination">
+					<li>
+				   		<c:if test="${map.pager.curBlock >= 1}">
+				    		<a aria-label="Previous" href="javascript:list('${map.pager.prevPage}')"><span aria-hidden="true">&laquo;</span></a>
+				   		</c:if> 
+				  	</li>
+				  	<li>
+				  		<c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
+					      	<c:choose>
+					              <c:when test="${num == map.pager.curPage}">  
+					                  <span style="color:orange;">${num}</span>&nbsp;
+					              </c:when>
+					              <c:otherwise>
+					                  <a href="javascript:list('${num}')">${num}</a>&nbsp;
+					              </c:otherwise>
+					        </c:choose>
+				        </c:forEach>
+				  	</li>
+				  	<li>
+					  	<c:if test="${map.pager.curBlock >= map.pager.totBlock}">
+							<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" ><span aria-hidden="true">&raquo;</span></a>
+					  	</c:if>
+				  	</li>
+				</ul>
+			</div>
 		</div>
-	</div>
 	</div>
 	
 	<div class="ser">
-<form name="form1" method="post" action="${path}/product/necklaceList.do?kind=목걸이"> 
-		<select name="search_option" class="option">
-			<c:choose>
-				<c:when test="${map.search_option == 'all'}">
-					<option value="all" selected="selected">상품명+내용</option>
-					<option value="productname">상품명</option>
-					<option value="description">내용</option>
-				</c:when>
-				<c:when test="${map.search_option == 'productname'}">
-					<option value="all">상품명+내용</option>
-					<option value="productname" selected="selected">상품명</option>
-					<option value="description">내용</option>
-				</c:when>
-				<c:when test="${map.search_option == 'description'}">
-					<option value="all">상품명+내용</option>
-					<option value="productname">상품명</option>
-					<option value="description" selected="selected">내용</option>
-				</c:when>
-			</c:choose>
-		</select> 
+		<form name="form1" method="post" action="${path}/product/necklaceList.do?kind=목걸이"> 
+			<select name="search_option" class="option">
+				<c:choose>
+					<c:when test="${map.search_option == 'all'}">
+						<option value="all" selected="selected">상품명+내용</option>
+						<option value="productname">상품명</option>
+						<option value="description">내용</option>
+					</c:when>
+					<c:when test="${map.search_option == 'productname'}">
+						<option value="all">상품명+내용</option>
+						<option value="productname" selected="selected">상품명</option>
+						<option value="description">내용</option>
+					</c:when>
+					<c:when test="${map.search_option == 'description'}">
+						<option value="all">상품명+내용</option>
+						<option value="productname">상품명</option>
+						<option value="description" selected="selected">내용</option>
+					</c:when>
+				</c:choose>
+			</select> 
 			<input class="keyword" name="keyword" value="${map.keyword}">
 	    	<input class="check" type="submit" value="조회">
-</form>
-</div>
+		</form>
+	</div>
  <%@ include file ="../include/footer.jsp" %>
 </body>
 </html>

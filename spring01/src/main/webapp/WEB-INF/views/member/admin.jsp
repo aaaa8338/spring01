@@ -10,8 +10,7 @@
 <body>
 <%@ include file ="../include/adminmenu.jsp" %>
 
-<c:if test="${message == 'success'}">
-</c:if>
+<c:if test="${message == 'success'}"> </c:if>
 
 	<h2>${sessionScope.name} (${sessionScope.userid})페이지 입니다.</h2>
 </body>

@@ -25,11 +25,11 @@
 <script>
 	$(document).ready(function () {
 		$(".pad").hover(function() {
-				$(this).addClass("sha", 10);
-			}, function() {
-				$(this).removeClass("sha", 100);
-			});
+			$(this).addClass("sha", 10);
+		}, function() {
+			$(this).removeClass("sha", 100);
 		});
+	});
 </script>
 <style type="text/css">
 .had{
@@ -43,30 +43,31 @@
 </style>
 </head>
 <body>
-<c:choose>
-	<c:when test="${sessionScope.power == '0'}">
-		<%@ include file ="../include/adminmenu.jsp" %>
-	</c:when>
-	<c:otherwise>
-		<%@ include file ="../include/menu.jsp" %>
-	</c:otherwise>
-</c:choose>
-<div class="had">
-<h1>product</h1>
-<span>${map.count}개의 상품이 있습니다.</span>
-</div>
+	<c:choose>
+		<c:when test="${sessionScope.power == '0'}">
+			<%@ include file ="../include/adminmenu.jsp" %>
+		</c:when>
+		
+		<c:otherwise>
+			<%@ include file ="../include/menu.jsp" %>
+		</c:otherwise>
+	</c:choose>
+	
+	<div class="had">
+		<h1>product</h1>
+		<span>${map.count}개의 상품이 있습니다.</span>
+	</div>
 
-<div class="list">
-	<input type="hidden" value="${row.kind}">
-	<ul>
-		<li><h2>카테고리</h2></li>
-		<li class="hover"><a href="${path}/product/allList.do">All</a></li>
-		<li class="hover"><a href="${path}/product/ringList.do?kind=반지">Ring</a></li>
-	    <li class="hover"><a href="${path}/product/necklaceList.do?kind=목걸이">Necklace</a></li>      
-	</ul>
-</div>
-
-
+	<div class="list">
+		<input type="hidden" value="${row.kind}">
+		<ul>
+			<li><h2>카테고리</h2></li>
+			<li class="hover"><a href="${path}/product/allList.do">All</a></li>
+			<li class="hover"><a href="${path}/product/ringList.do?kind=반지">Ring</a></li>
+		    <li class="hover"><a href="${path}/product/necklaceList.do?kind=목걸이">Necklace</a></li>      
+		</ul>
+	</div>
+	
 	<div class="middle">
 		<c:forEach var="row" items="${map.list}">
 		<input type="hidden" value="${row.kind}">
@@ -88,67 +89,62 @@
 		</c:forEach>
 	</div>
 
-	
-	
 	<div class="container">
-	<div class="row" style="text-align: center;">
-		<div class="col">
-			<ul class="pagination">
-			  <li>
-			   <c:if test="${map.pager.curBlock >= 1}">
-			    		<a aria-label="Previous" href="javascript:list('${map.pager.prevPage}')">
-			    		<span aria-hidden="true">&laquo;</span>
-			    		</a>
-			   </c:if> 
-			  </li>
-			  <li>
-			   <c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
-			      	<c:choose>
-			              <c:when test="${num == map.pager.curPage}">  
-			                  <span style="color:orange;">${num}</span>&nbsp;
-			              </c:when>
-			              <c:otherwise>
-			                  <a href="javascript:list('${num}')">${num}</a>&nbsp;
-			              </c:otherwise>
-			          </c:choose>
-			     </c:forEach>
-			  </li>
-			  <li>
-			  	<c:if test="${map.pager.curBlock >= map.pager.totBlock}">
-				<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" >
-				<span aria-hidden="true">&raquo;</span>
-				</a>
-			  	</c:if>
-			  </li>
-			</ul>
+		<div class="row" style="text-align: center;">
+			<div class="col">
+				<ul class="pagination">
+					<li>
+				  	<c:if test="${map.pager.curBlock >= 1}">
+				  		<a aria-label="Previous" href="javascript:list('${map.pager.prevPage}')"><span aria-hidden="true">&laquo;</span></a>
+				  	</c:if> 
+				  	</li>
+				  	<li>
+				   		<c:forEach var="num" begin="${map.pager.blockBegin}" end="${map.pager.blockEnd}">
+				      		<c:choose>
+					        	<c:when test="${num == map.pager.curPage}">  
+					            	<span style="color:orange;">${num}</span>&nbsp;
+					            </c:when>
+					            
+					            <c:otherwise>
+					            	<a href="javascript:list('${num}')">${num}</a>&nbsp;
+					            </c:otherwise>
+				          	</c:choose>
+				     	</c:forEach>
+				  	</li>
+				  	<li>
+				  		<c:if test="${map.pager.curBlock >= map.pager.totBlock}">
+							<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" ><span aria-hidden="true">&raquo;</span></a>
+				  		</c:if>
+				  	</li>
+				</ul>
+			</div>
 		</div>
-	</div>
 	</div>
 	
 	<div class="ser">
-<form name="form1" method="post" action="${path}/product/allList.do"> 
-		<select name="search_option" class="option">
-			<c:choose>
-				<c:when test="${map.search_option == 'all'}">
-					<option value="all" selected="selected">상품명+내용</option>
-					<option value="productname">상품명</option>
-					<option value="description">내용</option>
-				</c:when>
-				<c:when test="${map.search_option == 'productname'}">
-					<option value="all">상품명+내용</option>
-					<option value="productname" selected="selected">상품명</option>
-					<option value="description">내용</option>
-				</c:when>
-				<c:when test="${map.search_option == 'description'}">
-					<option value="all">상품명+내용</option>
-					<option value="productname">상품명</option>
-					<option value="description" selected="selected">내용</option>
-				</c:when>
-			</c:choose>
-		</select> 
+		<form name="form1" method="post" action="${path}/product/allList.do"> 
+			<select name="search_option" class="option">
+				<c:choose>
+					<c:when test="${map.search_option == 'all'}">
+						<option value="all" selected="selected">상품명+내용</option>
+						<option value="productname">상품명</option>
+						<option value="description">내용</option>
+					</c:when>
+					<c:when test="${map.search_option == 'productname'}">
+						<option value="all">상품명+내용</option>
+						<option value="productname" selected="selected">상품명</option>
+						<option value="description">내용</option>
+					</c:when>
+					<c:when test="${map.search_option == 'description'}">
+						<option value="all">상품명+내용</option>
+						<option value="productname">상품명</option>
+						<option value="description" selected="selected">내용</option>
+					</c:when>
+				</c:choose>
+			</select> 
 			<input class="keyword" name="keyword" value="${map.keyword}">
 	    	<input class="check" type="submit" value="조회">
-</form>
-</div>
+		</form>
+	</div>
  <%@ include file ="../include/footer.jsp" %>
 </html>

@@ -12,26 +12,29 @@
 <title>Insert title here</title>
 <%@ include file ="../include/header.jsp" %>
 <script type="text/javascript">
-function changeCheck() {
- 	if(document.form1.userpwd.value == ""){
-		alert('비밀번호를 입력해 주세요.');
-		form1.userpwd.focus();
-		return; 
+	function changeCheck() {
+	 	if (document.form1.userpwd.value.trim() == "") {
+			alert('비밀번호를 입력해 주세요.');
+			form1.userpwd.focus();
+			return; 
+		}
+	 	
+		if (document.form1.newuserpwd.value.trim() == "") {
+			alert('새비밀번호를 입력해 주세요.');
+			form1.newuserpwd.focus();
+			return; 
+		}
+		
+		if (document.form1.confirmPassword.value.trim() == "") {
+			alert('비밀번호확인을 입력해 주세요.');
+			form1.confirmPassword.focus();
+			return; 
+		} 
+		
+		document.form1.action = "${path}/member/change.do";
+		document.form1.submit();	
+		
 	}
-	if(document.form1.newuserpwd.value == ""){
-		alert('새비밀번호를 입력해 주세요.');
-		form1.newuserpwd.focus();
-		return; 
-	}
-	if(document.form1.confirmPassword.value == ""){
-		alert('비밀번호확인을 입력해 주세요.');
-		form1.confirmPassword.focus();
-		return; 
-	} 
-	document.form1.action = "${path}/member/change.do";
-	document.form1.submit();	
-	
-}
 </script>
 </head>
 <body>
@@ -76,15 +79,19 @@ function changeCheck() {
 					<c:if test="${message == 'required'}">
 						<div style="text-align: center;" class="alert alert-danger" role="alert" >비밀번호가 일치하지 않습니다</div>
 					</c:if>
+					
 					<c:if test="${message == 'error'}">
 						<div style="text-align: center;" class="alert alert-danger" role="alert" >비밀번호 확인이 일치하지 않습니다.</div>
 					</c:if>
+					
 					<c:if test="${message == 'error1'}">
 						<div style="text-align: center;" class="alert alert-danger" role="alert" >기존 비밀번호가 일치하지 않습니다.</div>
 					</c:if>
+					
 					<c:if test="${message == 'error2'}">
 						<div style="text-align: center;" class="alert alert-danger" role="alert" >기존 비밀번호와 동일합니다.</div>
 					</c:if>
+					
 					<div style="text-align: center;">
 						<input type="button" style="text-align: center;" class="btn btn-default" value="확인" onclick="changeCheck()">
 					</div>
@@ -94,7 +101,6 @@ function changeCheck() {
 		</div>
 	</div>
 	
-
 
 	<%-- <form name="form1" method="post">
 	<table style="width: 400px;">

@@ -89,8 +89,8 @@ $(function(){ //자동으로 실행되는 코드
             success: function(result){
                 console.log(result);
                 var output="<table>";
-                for(var i in result){
-                    var repl=result[i].replytext;
+                for (var i in result) {
+                    var repl = result[i].replytext;
                     repl = repl.replace(/  /gi,"&nbsp;&nbsp;");//공백처리
                     repl = repl.replace(/</gi,"&lt;"); //태그문자 처리
                     repl = repl.replace(/>/gi,"&gt;");
@@ -121,7 +121,7 @@ $(function(){ //자동으로 실행되는 코드
 	
 	//삭제 버튼
 	$("#btnDelete").click(function(){
-	    if(confirm("삭제하시겠습니까?")){
+	    if (confirm("삭제하시겠습니까?")) {
 	        document.form1.action="${path}/board/delete.do";
 	        document.form1.submit();
 	    }

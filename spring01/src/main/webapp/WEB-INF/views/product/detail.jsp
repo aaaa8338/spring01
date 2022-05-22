@@ -102,39 +102,44 @@ $(function () {
 	});
 	
 	$(".orderBtn").click(function() {
-        var name=$("#name").val();
-        var tel=$("#tel").val();
-        var zipcode=$("#zipcode").val();
-        var address1=$("#address1").val();
-        var address2=$("#address2").val(); 
-
-        if(name==""){
+        var name = $.trim($("#name").val());
+        var email = $.trim($("#email").val());
+        var tel = $.trim($("#tel").val());
+        var zipcode = $.trim($("#zipcode").val());
+        var address1 = $.trim($("#address1").val());
+        var address2 = $.trim($("#address2").val());
+        
+        if (name == "") {
             alert("이름을 입력하세요.");
             $("#name").focus();
             return;
         }
-      
-        if(tel==""){
+        
+        if (tel == "") {
             alert("전화번호를 입력하세요.");
             $("#tel").focus();
             return;
         }
-        if(zipcode==""){
+        
+        if (zipcode == "") {
             alert("우편번호를 입력하세요.");
             $("#zipcode").focus();
             return;
         }
-        if(address1==""){
+        
+        if (address1 == "") {
             alert("주소를 입력하세요.");
             $("#address1").focus();
             return;
         }
-        if(address2==""){
+        
+        if (address2 == "") {
             alert("상세주소를 입력하세요.");
             $("#address2").focus();
             return;
-        }     
-	
+        } 
+		
+		 
 		$("#form3").submit();
 		
 		alert('주문이 완료되었습니다');
@@ -143,39 +148,46 @@ $(function () {
 });
 
 function daumZipCode() {
-	new daum.Postcode(
-			{
-				oncomplete : function(data) {
+	 new daum.Postcode({
+		oncomplete: function(data) {
+			// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		 	// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+			// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, /이를 참고하여 분기 한다.
 
-					var fullAddr = '';
-					var extraAddr = '';
-
-					if (data.userSelectedType == 'R') {
-						fullAddr = data.roadAddress;
-
-					} else {
-						fullAddr = data.jibunAddress;
-					}
-
-					if (data.userSelectedType == 'R') {
-
-						if (data.bname !== '') {
-							extraAddr += data.bname;
-						}
-						if (data.buildingName !== '') {
-							extraAddr += (extraAddr != '' ? ', '
-									+ data.buildingName : data.buildingName);
-						}
-						fullAddr += (extraAddr != '' ? ' (' + extraAddr
-								+ ')' : '');
-					}
-
-					document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-					document.getElementById('address1').value = fullAddr;
-
-					document.getElementById('address2').focus();
-				}
-			}).open();
+	         var fullAddr = ''; // 최종 주소 변수
+	         var extraAddr = ''; // 조합형 주소 변수
+	 
+	         // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	         // 사용자가 도로명 주소를 선택했을 경우         
+	         if (data.userSelectedType == 'R') { 
+	             fullAddr = data.roadAddress;
+	 
+	         } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	             fullAddr = data.jibunAddress;
+	         }
+	 
+	         // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+	         if (data.userSelectedType == 'R') { 
+	             //법정동명이 있을 경우 추가한다.
+	             if (data.bname !== '') {
+	                 extraAddr += data.bname;
+	             }
+	             // 건물명이 있을 경우 추가한다.
+	             if (data.buildingName !== '') {
+	                 extraAddr += (extraAddr != '' ? ', ' + data.buildingName : data.buildingName);
+	             }
+	             // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+	             fullAddr += (extraAddr != '' ? ' (' + extraAddr + ')' : '');
+	         }
+	 
+	         // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	         document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+	         document.getElementById('address1').value = fullAddr;
+	 
+	         // 커서를 상세주소 필드로 이동한다.
+	         document.getElementById('address2').focus();
+	     }
+	 }).open();
 }
 </script>
 

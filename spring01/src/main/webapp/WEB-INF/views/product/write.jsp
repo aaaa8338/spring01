@@ -21,23 +21,27 @@ $(function(){
 		 /* 한글,영어,숫자만 */
 		var param = {"productname": productname};
 		var regexp = new RegExp("^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{1,10}$");
+		
 		$.ajax({
 			url: '${path}/product/productCheck.do?productname='+productname,
 			type: "get",
 			success: function(data) {
-				if(data==1){
+				if (data==1) {
 					$("#productCheck").text("exist");
 					$("#productCheck").css("color","red");
 					$("#insertBtn").attr("disabled",true);
-				}else if(productname == ""){
+					
+				} else if (productname == "") {
 					$("#productCheck").text("inputname");
 					$("#productCheck").css("color","red");
 					$("#insertBtn").attr("disabled",true);
-				}else if(regexp.test(productname)==false){
+					
+				} else if (!regexp.test(productname)) {
 					$("#productCheck").text("1-10자까지 가능");
 					$("#productCheck").css("color","black");
 					$("#insertBtn").attr("disabled",true);
-				}else{
+					
+				} else {
 					$("#productCheck").text("");
 					$("#insertBtn").attr("disabled",false);
 				}
@@ -53,21 +57,23 @@ $(function(){
 	$("#price").blur(function() {
 		var price = $("#price").val()
 		var regexp = new RegExp("^[0-9]{0,10}$");
-		if(regexp.test(price)==false){
+		
+		if (!regexp.test(price)) {
 			$("#number").text("only number");
 			$("#number").css("color","red");
 			$("#insertBtn").attr("disabled",true);
-		}else if(price == ""){
+			
+		}else if (price == "") {
 			$("#number").text("input number");
 			$("#number").css("color","red");
 			$("#insertBtn").attr("disabled",true);
-		}else{
+			
+		} else {
 			$("#number").text("");
 			$("#number").css("color","black");
 			$("#insertBtn").attr("disabled",false);
 		}
 	});
-
 
 });
 	function product_write() {

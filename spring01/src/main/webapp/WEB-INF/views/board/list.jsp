@@ -8,64 +8,64 @@
 <%@ include file ="../include/header.jsp" %>
 <%-- <link rel="stylesheet" href="${path}/css/board.css"/>  --%>
 <script type="text/javascript">
-$(function(){ //아이디가 btnWrite인 버튼을 누르게 되면 write.do 컨트롤러로 맵핑
-    $("#btnWrite").click(function(){
-        location.href="${path}/board/write.do";
-    });
-});
- 
-function list(page){ //현재 페이지의 조건을 넘겨준다. +뒤에있는 것들은 검색 
-    location.href="${path}/board/list.do?curPage="+page+"&search_option=${map.search_option}"+"&keyword=${map.keyword}";
-}
-
+	$(function(){ //아이디가 btnWrite인 버튼을 누르게 되면 write.do 컨트롤러로 맵핑
+	    $("#btnWrite").click(function(){
+	        location.href="${path}/board/write.do";
+	    });
+	});
+	 
+	function list(page){ //현재 페이지의 조건을 넘겨준다. +뒤에있는 것들은 검색 
+	    location.href="${path}/board/list.do?curPage="+page+"&search_option=${map.search_option}"+"&keyword=${map.keyword}";
+	}
 </script>
+
 <style type="text/css">
-.top {
-	text-align:center;
-}
-.ser {
-	text-align:center;
-	margin: 2% 0px;
-	padding: 0px;
-}
-.table tr td a:hover {
-	text-decoration: underline;
-	color: orange;
-}
-#btnWrite {
-	margin-bottom: 1%;
-}
-tr th{
-	text-align: center;
-}
-.sel{
-	height: 26px;
-	
-}
-.boardtop td{
-		font-weight: bold; 
-		border-bottom: 2px solid lightgray; 
-		background-color: white;
-		border-top: 0px;
-}
+	.top {
+		text-align:center;
+	}
+	.ser {
+		text-align:center;
+		margin: 2% 0px;
+		padding: 0px;
+	}
+	.table tr td a:hover {
+		text-decoration: underline;
+		color: orange;
+	}
+	#btnWrite {
+		margin-bottom: 1%;
+	}
+	tr th{
+		text-align: center;
+	}
+	.sel{
+		height: 26px;
+		
+	}
+	.boardtop td{
+			font-weight: bold; 
+			border-bottom: 2px solid lightgray; 
+			background-color: white;
+			border-top: 0px;
+	}
 
 </style>
 </head>
 <body>
 <c:if test="${sessionScope.userid == 'admin'}">
-<%@ include file ="../include/adminmenu.jsp" %>
+	<%@ include file ="../include/adminmenu.jsp" %>
 </c:if>
 <c:if test="${sessionScope.userid != 'admin'}">
-<%@ include file ="../include/menu.jsp" %>
+	<%@ include file ="../include/menu.jsp" %>
 </c:if>
 <div class="container">
 <div class="top">
-<h1>Board</h1>
-${map.count}개의 게시글이 있습니다.
+	<h1>Board</h1>
+	${map.count}개의 게시글이 있습니다.
 </div>
 <br>
 <div>
-<button type="button" id="btnWrite" class="btn btn-default btn-sm">글쓰기</button>
+	<button type="button" id="btnWrite" class="btn btn-default btn-sm">글쓰기</button>
 </div>
 <div id="wrap">
 <table class="table table-striped">
@@ -120,9 +120,7 @@ ${map.count}개의 게시글이 있습니다.
 			  </li>
 			  <li>
 			  	<c:if test="${map.pager.curBlock <= map.pager.totBlock}">
-				<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" >
-				<span aria-hidden="true">&raquo;</span>
-				</a>
+					<a aria-label="Next" href="javascript:list('${map.pager.nextPage}')" ><span aria-hidden="true">&raquo;</span></a>
 			  	</c:if>
 			  </li>
 			</ul>

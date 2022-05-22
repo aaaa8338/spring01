@@ -57,25 +57,25 @@
 						<div class="col-sm-5 col-xs-6 tital">Date Of Joining: <fmt:formatDate value="${dto.regdate}"/></div>
 					</div>
 				</div>
-						<div style="margin: 3% 0; text-align: center;">
-							<!-- <input type="button" class="btn btn-default" value="수정" id="btnUpdate"> -->
-							<a class="btn btn-default" id="btnDelete" href="javascript:deleted('${dto.userid}')">삭제</a>
-							<script type="text/javascript">
-							function deleted(userid) {
-								if(confirm("삭제하시겠습니까?")){
-									$.ajax({
-									    type: "post",
-									    url: "${path}/member/deleted.do?userid=${dto.userid}",  
-									    success: function () {
-										    window.opener.location.reload(); 
-										    window.close();
-								       }
-									});	
-								}   
-							}
-							</script>
-							<a class="btn btn-default" id="btnUpdate" href="${path}/member/userinfo.do?userid=${dto.userid}">수정</a>
-						</div>
+					<div style="margin: 3% 0; text-align: center;">
+						<!-- <input type="button" class="btn btn-default" value="수정" id="btnUpdate"> -->
+						<a class="btn btn-default" id="btnDelete" href="javascript:deleted('${dto.userid}')">삭제</a>
+						<script type="text/javascript">
+						function deleted(userid) {
+							if (confirm("삭제하시겠습니까?")) {
+								$.ajax({
+								    type: "post",
+								    url: "${path}/member/deleted.do?userid=${dto.userid}",  
+								    success: function () {
+									    window.opener.location.reload(); 
+									    window.close();
+							       }
+								});	
+							}   
+						}
+						</script>
+						<a class="btn btn-default" id="btnUpdate" href="${path}/member/userinfo.do?userid=${dto.userid}">수정</a>
+					</div>
 			</div>
 		</div>
 		</form>

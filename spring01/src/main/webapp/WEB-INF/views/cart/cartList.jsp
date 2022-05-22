@@ -24,8 +24,9 @@
 			var str = "";
 		    var num = 0;
 		    var count = $(".chBox").length;
-		    for(var i=0; i<count; i++ ){
-		        if($(".chBox")[i].checked == true){
+		    
+		    for (var i = 0; i < count; i++ ){
+		        if ($(".chBox")[i].checked) {
 		         	num += parseInt($(".chBox")[i].value);
 		        }
 		    }
@@ -35,20 +36,19 @@
 		    var fee = document.getElementById("fee");
 		   	var totalprice = document.getElementById("totalprice");
 		   	
-		   	if(num > 100000){
+		   	if (num > 100000) {
 		   		fee.value = 0;
-		   	}else{
+		   		
+		   	} else {
 		   		fee.value = 2500;
 		   	}
-		   	if(num==0){
-		   		fee.value = 0;
-		   	}
+		   	
+		   	if (num == 0) fee.value = 0;
 		   	
 		   	totalprice.value = parseInt(fee.value) + parseInt(num);
 		   	$("#totalprice").val(totalprice.value);
 			$(".order").slideDown();
 			$(".buyBtn").slideUp();
-			
 			
 		});
 		
@@ -65,6 +65,7 @@
 				$("#btnDelete").attr("disabled",false);
 				$(".buyBtn").attr("disabled",false);
 				itemSum();
+				
 			} else {
 				$(".chBox").prop("checked", false);
 				$("#btnUpdate").attr("disabled",true);
@@ -78,28 +79,27 @@
 			var count = $(".chBox").length;
 			var idx = 0;
 		    
-			for(var i=0; i<count; i++ ){
-		    	
-		    	if($(".chBox")[i].checked == true){
+			for (var i = 0; i < count; i++) {
+		    	if ($(".chBox")[i].checked) {
 		    		$("#allCheck").prop("checked", false);
 		    		$("#btnUpdate").attr("disabled",false);
 					$("#btnDelete").attr("disabled",false);
-					$(".buyBtn").attr("disabled",false);	
-		    	}
-		    	else if($(".chBox")[i].checked == false){
+					$(".buyBtn").attr("disabled",false);
+					
+		    	} else if(!$(".chBox")[i].checked) {
 		    		continue;
 		    	}
 		    	
 		    	idx++;
 		    }
 			
-			if(idx == 0){
+			if (idx == 0) {
 				$("#btnUpdate").attr("disabled",true);
 				$("#btnDelete").attr("disabled",true);
 				$(".buyBtn").attr("disabled",true);
 				$("#allCheck").prop("checked", false);
-			}
-			else if (idx == count){
+				
+			} else if (idx == count){
 				$("#allCheck").prop("checked", true);
 			}
 			
@@ -133,6 +133,7 @@
 					success : function(result) {
 						if (result == 1) {
 							location.href = "${path}/cart/list.do";
+							
 						} else {
 							alert("삭제 실패");
 						}
@@ -142,34 +143,37 @@
 		});
 
 		$(".orderBtn").click(function() {
-	        var name=$("#name").val();
-	        var tel=$("#tel").val();
-	        var zipcode=$("#zipcode").val();
-	        var address1=$("#address1").val();
-	        var address2=$("#address2").val(); 
+	        var name = $.trim($("#name").val());
+	        var tel = $.trim($("#tel").val());
+	        var zipcode = $.trim($("#zipcode").val());
+	        var address1 = $.trim($("#address1").val());
+	        var address2 = $.trim($("#address2").val()); 
 
-	        if(name==""){
+	        if (name == "") {
 	            alert("이름을 입력하세요.");
 	            $("#name").focus();
 	            return;
 	        }
 	      
-	        if(tel==""){
+	        if (tel == "") {
 	            alert("전화번호를 입력하세요.");
 	            $("#tel").focus();
 	            return;
 	        }
-	        if(zipcode==""){
+	        
+	        if (zipcode == "") {
 	            alert("우편번호를 입력하세요.");
 	            $("#zipcode").focus();
 	            return;
 	        }
-	        if(address1==""){
+	        
+	        if (address1 == "") {
 	            alert("주소를 입력하세요.");
 	            $("#address1").focus();
 	            return;
 	        }
-	        if(address2==""){
+	        
+	        if (address2 == "") {
 	            alert("상세주소를 입력하세요.");
 	            $("#address2").focus();
 	            return;
@@ -194,32 +198,32 @@
 	    var str = "";
 	    var price = 0;
 	    var count = $(".chBox").length;
-	    for(var i=0; i<count; i++ ){
-	        if($(".chBox")[i].checked == true){
-	         	price += parseInt($(".chBox")[i].value);
-	        }
+	    
+	    for (var i = 0; i < count; i++) {
+	        if ($(".chBox")[i].checked) price += parseInt($(".chBox")[i].value);   
 	    }
+	    
 	    $("#sum").html(price);
 	    /* $("#amount").val(price); */
 	   
 	    var fee = document.getElementById("fee");
 	   	var total = document.getElementById("total");
 	   	
-	   	if(price > 100000){
+	   	if (price > 100000) {
 	   		fee.value = 0;
-	   	}else{
+	   		
+	   	} else {
 	   		fee.value = 2500;
 	   	}
-	   	if(price==0){
-	   		fee.value = 0;
-	   	}
+	   	
+	   	if (price == 0) fee.value = 0;
+	   	
 	   	$("#fee").html(fee.value);
 	   	total.value = parseInt(fee.value) + parseInt(price);
 	   	$("#total").html(total.value);
 	 }
 	
 	
-
 	function updated() {
 		document.form1.action = "${path}/cart/update.do";
 		document.form1.submit();
@@ -228,39 +232,38 @@
 
 	
 	function daumZipCode() {
-		new daum.Postcode(
-				{
-					oncomplete : function(data) {
+		new daum.Postcode({
+			oncomplete : function(data) {
 
-						var fullAddr = '';
-						var extraAddr = '';
+				var fullAddr = '';
+				var extraAddr = '';
 
-						if (data.userSelectedType == 'R') {
-							fullAddr = data.roadAddress;
+				if (data.userSelectedType == 'R') {
+					fullAddr = data.roadAddress;
 
-						} else {
-							fullAddr = data.jibunAddress;
-						}
+				} else {
+					fullAddr = data.jibunAddress;
+				}
 
-						if (data.userSelectedType == 'R') {
+				if (data.userSelectedType == 'R') {
 
-							if (data.bname !== '') {
-								extraAddr += data.bname;
-							}
-							if (data.buildingName !== '') {
-								extraAddr += (extraAddr != '' ? ', '
-										+ data.buildingName : data.buildingName);
-							}
-							fullAddr += (extraAddr != '' ? ' (' + extraAddr
-									+ ')' : '');
-						}
-
-						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-						document.getElementById('address1').value = fullAddr;
-
-						document.getElementById('address2').focus();
+					if (data.bname !== '') {
+						extraAddr += data.bname;
 					}
-				}).open();
+					
+					if (data.buildingName !== '') {
+						extraAddr += (extraAddr != '' ? ', ' + data.buildingName : data.buildingName);
+					}
+					
+					fullAddr += (extraAddr != '' ? ' (' + extraAddr + ')' : '');
+				}
+
+				document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+				document.getElementById('address1').value = fullAddr;
+
+				document.getElementById('address2').focus();
+			}
+		}).open();
 	}
 	
 	

@@ -52,10 +52,10 @@
 </c:if>
 <script type="text/javascript">
 function deleted() {
-	if(confirm("삭제하시겠습니까?")){
+	if (confirm("삭제하시겠습니까?")) {
 		var rno = $("#rno").val();
         var bno = $("#bno").val();
-        var replytext=$("#replytext").val();
+        var replytext = $("#replytext").val();
         var curPage = $("#curPage").val();
         var search_option = $("#search_option").val();
         var keyword = $("#keyword").val();
@@ -75,13 +75,13 @@ function deleted() {
 	}   
 }
 function updated() {
-	if(confirm("수정하시겠습니까?")){
-		var bno= document.getElementById('bno').value; 
-		var userid= document.getElementById('userid').value; 
-		var rno= document.getElementById('rno').value; 
-		var curPage= document.getElementById('curPage').value; 
-		var search_option= document.getElementById('search_option').value; 
-		var keyword= document.getElementById('keyword').value; 
+	if (confirm("수정하시겠습니까?")) {
+		var bno = document.getElementById('bno').value; 
+		var userid = document.getElementById('userid').value; 
+		var rno = document.getElementById('rno').value; 
+		var curPage = document.getElementById('curPage').value; 
+		var search_option = document.getElementById('search_option').value; 
+		var keyword = document.getElementById('keyword').value; 
 		var replytext = document.getElementById('replytext').value;
 		/* var replytext = $("textarea#replytext").text(); */
 		var param = {"rno": rno, "bno": bno, "curPage":curPage, "search_option": search_option, "keyword": keyword, "replytext": replytext};

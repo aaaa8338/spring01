@@ -15,7 +15,7 @@
 	function product_update() {
 		var price = document.form1.price.value;
 		
-		if(isNaN(document.form1.price.value)){
+		if (isNaN(document.form1.price.value)) {
 			alert("숫자를 입력하세요");
 			document.form1.price.focus();
 			return;
@@ -26,7 +26,7 @@
 	}
 	
 	function product_delete() {
-		if(confirm("삭제하시겠습니까?")){
+		if (confirm("삭제하시겠습니까?")) {
 			document.form1.action="${path}/product/delete.do";
 			document.form1.submit();
 		}

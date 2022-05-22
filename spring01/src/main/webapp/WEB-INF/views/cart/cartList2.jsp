@@ -31,6 +31,7 @@
 			if (chk) {
 				$(".chBox").prop("checked", true);
 				itemSum();
+				
 			} else {
 				$(".chBox").prop("checked", false);
 				itemSum();
@@ -45,6 +46,7 @@
 		var tt = "${cart}";
 		if (tt == 'false') {
 			$("#allCheck").prop("checked", false);
+			
 		} else {
 			$("#allCheck").prop("checked", true);
 			$(".chBox").prop("checked", true);
@@ -68,6 +70,7 @@
 					success : function(result) {
 						if (result == 1) {
 							location.href = "${path}/cart/list.do";
+							
 						} else {
 							alert("삭제 실패");
 						}
@@ -107,39 +110,37 @@
 	}
 
 	function daumZipCode() {
-		new daum.Postcode(
-				{
-					oncomplete : function(data) {
+		new daum.Postcode({
+			oncomplete : function(data) {
 
-						var fullAddr = '';
-						var extraAddr = '';
+				var fullAddr = '';
+				var extraAddr = '';
 
-						if (data.userSelectedType == 'R') {
-							fullAddr = data.roadAddress;
+				if (data.userSelectedType == 'R') {
+					fullAddr = data.roadAddress;
 
-						} else {
-							fullAddr = data.jibunAddress;
-						}
+				} else {
+					fullAddr = data.jibunAddress;
+				}
 
-						if (data.userSelectedType == 'R') {
-
-							if (data.bname !== '') {
-								extraAddr += data.bname;
-							}
-							if (data.buildingName !== '') {
-								extraAddr += (extraAddr != '' ? ', '
-										+ data.buildingName : data.buildingName);
-							}
-							fullAddr += (extraAddr != '' ? ' (' + extraAddr
-									+ ')' : '');
-						}
-
-						document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
-						document.getElementById('address1').value = fullAddr;
-
-						document.getElementById('address2').focus();
+				if (data.userSelectedType == 'R') {
+					if (data.bname !== '') {
+						extraAddr += data.bname;
 					}
-				}).open();
+					
+					if (data.buildingName !== '') {
+						extraAddr += (extraAddr != '' ? ', ' + data.buildingName : data.buildingName);
+					}
+					
+					fullAddr += (extraAddr != '' ? ' (' + extraAddr + ')' : '');
+				}
+
+				document.getElementById('zipcode').value = data.zonecode; //5자리 새우편번호 사용
+				document.getElementById('address1').value = fullAddr;
+
+				document.getElementById('address2').focus();
+			}
+		}).open();
 	}
 </script>
 </head>
