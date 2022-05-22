@@ -48,8 +48,7 @@ public class MemberController {
 
     @RequestMapping("list.do")
 	public ModelAndView list(@RequestParam(defaultValue="name") String search_option, 
-			@RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int curPage,
-			ModelAndView mav) throws Exception {
+			@RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int curPage, ModelAndView mav) throws Exception {
 		
 		int count = memberService.countMember(search_option, keyword);
 		
@@ -84,8 +83,7 @@ public class MemberController {
 	}
 		
 	@RequestMapping("insert.do")
-	public String insert(@ModelAttribute("memberDto") MemberDTO dto, @RequestParam String userid,
-			Errors errors, Model model) throws Exception  {
+	public String insert(@ModelAttribute("memberDto") MemberDTO dto, @RequestParam String userid, Errors errors, Model model) throws Exception  {
 		new MemberValidator().validate(dto, errors);
 		
 		//int result = memberService.idCheck(userid);
@@ -95,7 +93,6 @@ public class MemberController {
 		
 		if (errors.hasErrors()) return "member/write";
 			
-
 //		if (result == 1) { // 중복된 아이디가 있을경우 
 //			// 아이디 비밀번호 초기화
 //			dto.setUserid("");
@@ -126,12 +123,9 @@ public class MemberController {
 
 	
 	@RequestMapping("update.do")
-	public String update(@RequestParam String userid,
-			@ModelAttribute MemberDTO dto, Model model, Errors errors) {
-		
+	public String update(@RequestParam String userid, @ModelAttribute MemberDTO dto, Model model, Errors errors) {
 		if (errors.hasErrors()) return "redirect:/member/userinfo.do";
 	
-		
 		memberService.userUpdate(dto);
 		return "redirect:/";	
 	}
@@ -163,28 +157,22 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		
 		if (memberDto != null) {
-			
 			result = bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 			
 		} else {
-			
 			result = false;
 		}
 		
 		if (memberDto != null && result) { // 로그인 성공
-			
 			if (memberDto.getPower().equals("admin")) {
-				
 				mav.addObject("message","success");
 				mav.setViewName("member/admin");
 				
 			} else {
-				
 				mav.setViewName("home");
-				
 			}
-		}else {  // 로그인 실패하면 login 페이지로 이동 
 			
+		} else {  // 로그인 실패하면 login 페이지로 이동 
 			result = false;
 			mav.setViewName("member/login");
 			mav.addObject("message","error");
@@ -206,13 +194,13 @@ public class MemberController {
 	@RequestMapping("info.do")
 	public String userinfo(Model model, HttpSession session) {
 		String userid = (String)session.getAttribute("userid");
+		
 		// 회원정보를 model에 저장
 		if (userid != null) {
-			
 			model.addAttribute("dto",memberService.detail(userid));
 			session.setAttribute("userid", userid);
-			
 		}
+		
 		//view.jsp로 포워딩
 		return "member/info";
 	}
@@ -225,7 +213,6 @@ public class MemberController {
 //		boolean result = memberService.pwdCheck(dto.getUserid(), dto.getUserpwd());
 		
 		if (memberDto != null && run) {
-			
 			String str = bCryptPasswordEncoder.encode(dto.getUserpwd());
 			dto.setUserpwd(str);
 			memberService.userUpdate(dto);
@@ -233,7 +220,6 @@ public class MemberController {
 			return "redirect:/member/info.do";
 			
 		} else {
-			
 			// 비밀번호가 틀렸을시에 가입자가 지워지지 않도록 처리
 			run = false;
 			
@@ -251,25 +237,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping("userDelete.do")
-	public String userdelete(@RequestParam String userid, @RequestParam String userpwd, HttpSession session,
-			Model model, MemberDTO dto) {
-	
+	public String userdelete(@RequestParam String userid, @RequestParam String userpwd, HttpSession session, Model model, MemberDTO dto) {
 		MemberDTO memberDto = memberService.loginCheck(dto);
 		boolean run =  bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 //		boolean result = memberService.pwdCheck(userid, userpwd);
 		
 		if (memberDto != null && run) {
-			
 			memberService.delete(userid);
 			memberService.logout(session);
 			model.addAttribute("message","delete");
 			
 			return "redirect:/member/login.do";
 			
-		}else {
-			
+		} else {
 			run = false;
-			
 			model.addAttribute("dto",memberService.detail(userid));
 			model.addAttribute("message","notMatching");
 			
@@ -282,6 +263,7 @@ public class MemberController {
 		String userid = (String)session.getAttribute("userid");
 		model.addAttribute("dto",memberService.detail(userid));
 		session.setAttribute("userid", userid);
+		
 		return "member/changePwdForm";
 	}
 	
@@ -293,45 +275,40 @@ public class MemberController {
 		boolean run;
 		
 		if (memberDto != null) {
-			
 			run = bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 			
 		} else {
-			
 			run = false;
 		}
 		
 		
 		if (!dto.isnewuserpwdEqualToConfirmPassword()) {
-			
 			model.addAttribute("message","error");
 			
 			return "member/changePwdForm";
 		}
 		
 		if (run && result) {
-			
 			if (dto.getUserpwd().equals(dto.getNewuserpwd())) {
-				
 				model.addAttribute("message","error2");
+				
 				return "member/changePwdForm";
 				
 			} else {
-				
 				String newPwd = bCryptPasswordEncoder.encode(dto.getNewuserpwd());
 				dto.setNewuserpwd(newPwd);
 				memberService.changePwd(userid,dto.getUserpwd(),dto.getNewuserpwd());
 				memberService.logout(session);
 				model.addAttribute("message","change");
+				
 				return "redirect:/member/login.do";
-			
 			}
 			
 		} else {
-			
 			run = false;
 			model.addAttribute("dto",memberService.detail(userid));
 			model.addAttribute("message","error1");
+			
 			return "member/changePwdForm";
 		}
 			
@@ -353,7 +330,6 @@ public class MemberController {
 		
 		if (errors.hasErrors()) return "member/findPwd";
 
-		
 		if (memberDto != null) {
 			String setfrom = "home";
 			String tomail = dto.getEmail(); // 받는 사람 이메일
@@ -385,6 +361,5 @@ public class MemberController {
 		return "member/sendSuccess";
 	}
 
-	
 	
 }
