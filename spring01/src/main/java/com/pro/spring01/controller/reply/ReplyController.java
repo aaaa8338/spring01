@@ -56,10 +56,10 @@ public class ReplyController {
 //  	//jsp 페이지로 가거나 데이터를 리턴하지 않음
 //  }
 
-  @RequestMapping("board/reply_list.do")
-  @ResponseBody
-  public ModelAndView list(int bno, ModelAndView mav, ReplyDTO dto, @RequestParam(value = "curPage")int curPage, 
-	@RequestParam(value = "search_option") String search_option, @RequestParam(value = "keyword") String keyword) {
+    @RequestMapping("board/reply_list.do")
+    @ResponseBody
+  	public ModelAndView list(int bno, ModelAndView mav, ReplyDTO dto, @RequestParam(value = "curPage")int curPage, 
+							@RequestParam(value = "search_option") String search_option, @RequestParam(value = "keyword") String keyword) {
      
 	  List<ReplyDTO> list = replyService.list(bno);
       Map<String,Object> map = new HashMap<>(); 
@@ -81,17 +81,14 @@ public class ReplyController {
 //      return replyService.list(bno);
 //  }
   
-  // 댓글 등록
-  @RequestMapping("/board/reply_insert.do")
-  @ResponseBody
-  public void insert (ReplyDTO dto, HttpSession session,
-           @RequestParam(value="replytext") String replytext,
-           @RequestParam(value="bno") int bno) {
-  	
-  	if (session.getAttribute("userid") != null) {
-  		String userid=(String)session.getAttribute("userid");
-  		dto.setUserid(userid);
-  	}
+    // 댓글 등록
+    @RequestMapping("/board/reply_insert.do")
+    @ResponseBody
+    public void insert (ReplyDTO dto, HttpSession session, @RequestParam(value="replytext") String replytext, @RequestParam(value="bno") int bno) {
+		if (session.getAttribute("userid") != null) {
+			String userid=(String)session.getAttribute("userid");
+			dto.setUserid(userid);
+		}
   	
       dto.setReplytext(replytext);
       dto.setBno(bno);
@@ -101,52 +98,46 @@ public class ReplyController {
   }
   
   
-//  @RequestMapping("/reply/update.do")    //세부적인 url pattern
-//  public String reply_update (@RequestParam() int rno, @RequestParam() String replytext, HttpSession session,
-//          @RequestParam()int bno, ReplyDTO dto) throws Exception{
-//  	String userid=(String)session.getAttribute("userid");
-//      dto.setRno(rno);
-//      dto.setReplytext(replytext);
-//      dto.setReplyer(userid);
+//    @RequestMapping("/reply/update.do")    //세부적인 url pattern
+//    public String reply_update (@RequestParam() int rno, @RequestParam() String replytext, HttpSession session, @RequestParam()int bno, ReplyDTO dto) throws Exception{
+//    	String userid=(String)session.getAttribute("userid");
+//    	dto.setRno(rno);
+//    	dto.setReplytext(replytext);
+//    	dto.setReplyer(userid);
 //      
-//      System.out.println("dto에 있는값들 출력함"+dto);
+//    	System.out.println("dto에 있는값들 출력함"+dto);
 //
-//      replyService.update(dto);
-//      
-//      
-//      return "forward:/board/list.do";
-//  }
+//    	replyService.update(dto);
+//    	return "forward:/board/list.do";
+//    }
   
   //댓글 수정
-  @RequestMapping("/board/reply_update.do")
-  @ResponseBody
-  public void reply_update (@RequestParam(value = "rno") int rno, ReplyDTO dto,
-  	@RequestParam(value = "replytext")String replytext, 
-  	@RequestParam(value = "bno") int bno,HttpSession session) throws Exception{
+    @RequestMapping("/board/reply_update.do")
+    @ResponseBody
+    public void reply_update (@RequestParam(value = "rno") int rno, ReplyDTO dto, @RequestParam(value = "replytext")String replytext, 
+    							@RequestParam(value = "bno") int bno,HttpSession session) throws Exception{
   	
-  	String userid=(String)session.getAttribute("userid");
-		dto.setUserid(userid);
-//		dto.setReplytext(replytext);
-		dto.setRno(rno);
-		
-  	replyService.update(dto);
-  	System.out.println("dto :"+dto);
+	  	String userid=(String)session.getAttribute("userid");
+			dto.setUserid(userid);
+//			dto.setReplytext(replytext);
+			dto.setRno(rno);
+			
+	  	replyService.update(dto);
+	  	System.out.println("dto :"+dto);
 
   }
   
   
-  //댓글 삭제
-  @RequestMapping("/board/reply_delete.do")
-  @ResponseBody
-  public void reply_delete (@RequestParam(value="rno") int rno, @RequestParam(value="bno") int bno,
-  		ReplyDTO dto, HttpSession session) throws Exception{
-      replyService.delete(rno);
-
-  }
+    //댓글 삭제
+    @RequestMapping("/board/reply_delete.do")
+    @ResponseBody
+    public void reply_delete (@RequestParam(value="rno") int rno, @RequestParam(value="bno") int bno, ReplyDTO dto, HttpSession session) throws Exception{
+    	replyService.delete(rno);
+    }
   
-  @RequestMapping("/board/reply_list_json.do")
-  public List<ReplyDTO> list_json(int bno){
-      return replyService.list(bno);
-  }
+    @RequestMapping("/board/reply_list_json.do")
+    public List<ReplyDTO> list_json(int bno){
+    	return replyService.list(bno);
+    }
 }
 

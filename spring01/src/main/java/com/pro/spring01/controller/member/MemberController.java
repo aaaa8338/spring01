@@ -150,7 +150,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@RequestMapping("loginCheck.do")
+	@RequestMapping("logirnCheck.do")
 	public ModelAndView loginCheck(@ModelAttribute MemberDTO dto, HttpSession session) {
 		boolean result;
 		MemberDTO memberDto = memberService.loginCheck(dto, session);
@@ -166,7 +166,7 @@ public class MemberController {
 		if (memberDto != null && result) { // 로그인 성공
 			if (memberDto.getPower().equals("admin")) {
 				mav.addObject("message","success");
-				mav.setViewName("member/admin");
+				mav.setViewName("membe/admin");
 				
 			} else {
 				mav.setViewName("home");
@@ -209,10 +209,10 @@ public class MemberController {
 	public String userUpdate(@ModelAttribute MemberDTO dto, Model model, HttpSession session) {
 		//비밀번호 체크
 		MemberDTO memberDto = memberService.loginCheck(dto);
-		boolean run =  bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
+		boolean result =  bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 //		boolean result = memberService.pwdCheck(dto.getUserid(), dto.getUserpwd());
 		
-		if (memberDto != null && run) {
+		if (memberDto != null && result) {
 			String str = bCryptPasswordEncoder.encode(dto.getUserpwd());
 			dto.setUserpwd(str);
 			memberService.userUpdate(dto);
@@ -221,7 +221,7 @@ public class MemberController {
 			
 		} else {
 			// 비밀번호가 틀렸을시에 가입자가 지워지지 않도록 처리
-			run = false;
+			result = false;
 			
 			MemberDTO dto2 = memberService.detail(dto.getUserid());
 			
@@ -239,10 +239,10 @@ public class MemberController {
 	@RequestMapping("userDelete.do")
 	public String userdelete(@RequestParam String userid, @RequestParam String userpwd, HttpSession session, Model model, MemberDTO dto) {
 		MemberDTO memberDto = memberService.loginCheck(dto);
-		boolean run =  bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
+		boolean result =  bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 //		boolean result = memberService.pwdCheck(userid, userpwd);
 		
-		if (memberDto != null && run) {
+		if (memberDto != null && result) {
 			memberService.delete(userid);
 			memberService.logout(session);
 			model.addAttribute("message","delete");
@@ -250,7 +250,7 @@ public class MemberController {
 			return "redirect:/member/login.do";
 			
 		} else {
-			run = false;
+			result = false;
 			model.addAttribute("dto",memberService.detail(userid));
 			model.addAttribute("message","notMatching");
 			
@@ -271,14 +271,14 @@ public class MemberController {
 	public String change(@ModelAttribute MemberDTO dto, Model model, HttpSession session ) {
 		String userid = (String)session.getAttribute("userid");
 		MemberDTO memberDto = memberService.detail(userid);
-		boolean result = memberService.pwdCheck(userid, dto.getUserpwd());
-		boolean run;
+		boolean chk = memberService.pwdCheck(userid, dto.getUserpwd());
+		boolean result;
 		
 		if (memberDto != null) {
-			run = bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
+			result = bCryptPasswordEncoder.matches(dto.getUserpwd(), memberDto.getUserpwd());
 			
 		} else {
-			run = false;
+			result = false;
 		}
 		
 		
@@ -288,7 +288,7 @@ public class MemberController {
 			return "member/changePwdForm";
 		}
 		
-		if (run && result) {
+		if (result && chk) {
 			if (dto.getUserpwd().equals(dto.getNewuserpwd())) {
 				model.addAttribute("message","error2");
 				
@@ -297,7 +297,7 @@ public class MemberController {
 			} else {
 				String newPwd = bCryptPasswordEncoder.encode(dto.getNewuserpwd());
 				dto.setNewuserpwd(newPwd);
-				memberService.changePwd(userid,dto.getUserpwd(),dto.getNewuserpwd());
+				memberService.changePwd(userid, dto.getUserpwd(), dto.getNewuserpwd());
 				memberService.logout(session);
 				model.addAttribute("message","change");
 				
@@ -305,7 +305,7 @@ public class MemberController {
 			}
 			
 		} else {
-			run = false;
+			result = false;
 			model.addAttribute("dto",memberService.detail(userid));
 			model.addAttribute("message","error1");
 			
@@ -323,8 +323,7 @@ public class MemberController {
 	
 	
 	@RequestMapping("send.do")
-	public String mailSending(Model model, HttpServletResponse response,
-			@ModelAttribute("memberDto")MemberDTO dto, Errors errors) {
+	public String mailSending(Model model, HttpServletResponse response, @ModelAttribute("memberDto")MemberDTO dto, Errors errors) {
 		MemberDTO memberDto = memberService.findPwd(dto.getUserid(), dto.getEmail());
 		new FindPwdValidator().validate(dto, errors);
 		

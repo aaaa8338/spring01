@@ -26,7 +26,7 @@ $(function(){
 			url: '${path}/product/productCheck.do?productname='+productname,
 			type: "get",
 			success: function(data) {
-				if (data==1) {
+				if (data == 1) {
 					$("#productCheck").text("exist");
 					$("#productCheck").css("color","red");
 					$("#insertBtn").attr("disabled",true);
