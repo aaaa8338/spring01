@@ -150,7 +150,7 @@ public class MemberController {
 		return "member/login";
 	}
 	
-	@RequestMapping("logirnCheck.do")
+	@RequestMapping("loginCheck.do")
 	public ModelAndView loginCheck(@ModelAttribute MemberDTO dto, HttpSession session) {
 		boolean result;
 		MemberDTO memberDto = memberService.loginCheck(dto, session);
