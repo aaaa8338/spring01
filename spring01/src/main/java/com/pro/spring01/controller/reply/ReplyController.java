@@ -58,8 +58,8 @@ public class ReplyController {
 
     @RequestMapping("board/reply_list.do")
     @ResponseBody
-  	public ModelAndView list(int bno, ModelAndView mav, ReplyDTO dto, @RequestParam(value = "curPage")int curPage, 
-							@RequestParam(value = "search_option") String search_option, @RequestParam(value = "keyword") String keyword) {
+  	public ModelAndView list(int bno, ModelAndView mav, ReplyDTO dto, @RequestParam(value = "curPage") int curPage, 
+							   @RequestParam(value = "search_option") String search_option, @RequestParam(value = "keyword") String keyword) {
      
 	  List<ReplyDTO> list = replyService.list(bno);
       Map<String,Object> map = new HashMap<>(); 
@@ -86,7 +86,7 @@ public class ReplyController {
     @ResponseBody
     public void insert (ReplyDTO dto, HttpSession session, @RequestParam(value="replytext") String replytext, @RequestParam(value="bno") int bno) {
 		if (session.getAttribute("userid") != null) {
-			String userid=(String)session.getAttribute("userid");
+			String userid = (String)session.getAttribute("userid");
 			dto.setUserid(userid);
 		}
   	
@@ -114,13 +114,13 @@ public class ReplyController {
   //댓글 수정
     @RequestMapping("/board/reply_update.do")
     @ResponseBody
-    public void reply_update (@RequestParam(value = "rno") int rno, ReplyDTO dto, @RequestParam(value = "replytext")String replytext, 
-    							@RequestParam(value = "bno") int bno,HttpSession session) throws Exception{
+    public void reply_update (@RequestParam(value = "rno") int rno, ReplyDTO dto, @RequestParam(value = "replytext") String replytext, 
+    						    @RequestParam(value = "bno") int bno, HttpSession session) throws Exception{
   	
-	  	String userid=(String)session.getAttribute("userid");
-			dto.setUserid(userid);
-//			dto.setReplytext(replytext);
-			dto.setRno(rno);
+	  	String userid = (String)session.getAttribute("userid");
+		dto.setUserid(userid);
+//		dto.setReplytext(replytext);
+		dto.setRno(rno);
 			
 	  	replyService.update(dto);
 	  	System.out.println("dto :"+dto);
