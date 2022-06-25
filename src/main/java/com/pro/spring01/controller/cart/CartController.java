@@ -27,10 +27,10 @@ public class CartController {
 	
 	@RequestMapping("insert.do")
 	public String insert(@ModelAttribute CartDTO dto, HttpSession session) {
-		//로그인 여부를 체크하기 위해 세션에 저장된 아이디 확인
+		// 로그인 여부를 체크하기 위해 세션에 저장된 아이디 확인
 		String userid = (String)session.getAttribute("userid");
 		dto.setUserid(userid);
-		cartService.insert(dto); //장바구니 테이블에 저장됨 
+		cartService.insert(dto); // 장바구니 테이블에 저장됨 
 		
 		return "redirect:/cart/list.do"; // 장바구니 목록으로 이동
 	}
@@ -41,12 +41,12 @@ public class CartController {
 		String userid = (String)session.getAttribute("userid");
 		
 		if (userid != null) { //로그인상태
-			List<CartDTO> list = cartService.list(userid); //장바구니 목록 
+			List<CartDTO> list = cartService.list(userid); // 장바구니 목록 
 			int sumMoney = cartService.sumMoney(userid);
-			int fee = sumMoney >= 100000 ? 0 : 2500; //배송료 계산
+			int fee = sumMoney >= 100000 ? 0 : 2500; // 배송료 계산
 			
 			map.put("fee", fee); // 배송료
-			map.put("sumMoney", sumMoney); //장바구니 합계 금액 
+			map.put("sumMoney", sumMoney); // 장바구니 합계 금액 
 			map.put("sum", sumMoney+fee); // 전체 금액
 			map.put("list", list); // 장바구니 목록
 			map.put("count", list.size()); // 레코드 갯수
