@@ -114,7 +114,7 @@ public class MemberController {
 	
 	@RequestMapping("userinfo.do")
 	public String userinfo(@RequestParam String userid, Model model) {
-		// 회원정보를 model에 저장
+		// 회원정보를 model에 저장! 
 		model.addAttribute("dto",memberService.detail(userid));
 		//view.jsp로 포워딩
 		return "member/userinfo";
